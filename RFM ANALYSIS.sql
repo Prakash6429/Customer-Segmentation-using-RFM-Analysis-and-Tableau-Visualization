@@ -1,24 +1,7 @@
-# Microsoft SQL Data Analysis and RFM Segmentation
-
-
-Conducted an in-depth data analysis project utilizing Microsoft SQL to extract valuable insights and performed Recency-Frequency-Monetary (RFM) segmentation. Leveraged Tableau for effective visualization of findings and actionable recommendations.
-
-
-
-Below the snapshot of the Tableau Presentation:
-<img width="760" alt="1" src="https://github.com/sumit-kumar-crypto/Microsoft-SQL-Data-Analysis-and-RFM-Segmentation/assets/83686292/f144bb8c-8fcb-4197-9f54-029139d535b1">
-<img width="758" alt="2" src="https://github.com/sumit-kumar-crypto/Microsoft-SQL-Data-Analysis-and-RFM-Segmentation/assets/83686292/299777a6-7a2e-4282-b818-077f7e173b1b">
-
-
-**Performed analysis in MS SQL is following:**
-
-
-_---DATA OVERLOOK:_
-
+---DATA OVERLOOK
 select * from sales_data_sample
 
-_---UNIQUE VALUE CHECK:_
-
+---UNIQUE VALUE CHECK
 select distinct status from sales_data_sample
 select distinct year_id from sales_data_sample
 select distinct COUNTRY from sales_data_sample
@@ -26,40 +9,35 @@ select distinct TERRITORY from sales_data_sample
 select distinct DEALSIZE from sales_data_sample
 select distinct PRODUCTLINE from sales_data_sample
 
-_---DATA ANALYSIS_
+---DATA ANALYSIS
 
 
-_---Year Wise Production:_
-
+---Year Wise Production
 select YEAR_ID,SUM(sales) as REVENUE
 from sales_data_sample
 group by YEAR_ID
 ORDER BY 2 DESC
 
-_---Grouping Sales by PRODUCTLINE:_
-
+---Grouping Sales by PRODUCTLINE
 select PRODUCTLINE,SUM(sales) as REVENUE
 from sales_data_sample
 group by PRODUCTLINE
 ORDER BY 2 DESC
 
-_---Examining the number of months Sales was active in different years:_
-
+---Examining the number of months Sales was active in different years
 select YEAR_ID,count(distinct(MONTH_ID)) FROM sales_data_sample
 group by YEAR_ID
 
 
 
-_---Months with highest number of REVENUE generated:_
-
+---Months with highest number of REVENUE generated
 select YEAR_ID,MONTH_ID,SUM(sales) as REVENUE,COUNT(ORDERNUMBER) AS FREQUENCY
 from sales_data_sample
 group by YEAR_ID,MONTH_ID
 ORDER BY 3 DESC
 
 
-_---Highest Revenue being generated in November and October,Let's examine the PRODUCTLINE of those months:_
-
+---Highest Revenue being generated in November and October,Let's examine the PRODUCTLINE of those months.
 select YEAR_ID,MONTH_ID,PRODUCTLINE,SUM(sales) as REVENUE,COUNT(ORDERNUMBER) AS FREQUENCY
 from sales_data_sample
 group by YEAR_ID,MONTH_ID,PRODUCTLINE
@@ -68,17 +46,14 @@ ORDER BY 4 DESC
 
 
 
-_---DEALSIZE proportion according to REVENUE generated:_
-
+---DEALSIZE proportion according to REVENUE generated
 select DEALSIZE,SUM(sales) as REVENUE
 from sales_data_sample
 group by DEALSIZE
 ORDER BY 2 DESC
 
 
-_---Finding out the best customer with RFM Analysis:_
-
-
+---Finding out the best customer with RFM Analysis
 DROP TABLE IF EXISTS #rfm
 ;with rfm as 
 (
@@ -119,7 +94,6 @@ select CUSTOMERNAME , rfm_recency, rfm_frequency, rfm_monetary,
 	end rfm_segment
 
 from #rfm
-
 
 
 
